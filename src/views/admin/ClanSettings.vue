@@ -2,11 +2,9 @@
 import { onMounted, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { ArrowLeft, Save, Settings, ShieldCheck } from 'lucide-vue-next'
-import axios from 'axios'
+import api from '../../services/api'
 
 const router = useRouter()
-const API = 'http://127.0.0.1:5000/api'
-
 const leagues = [
   'Skeleton I', 'Skeleton II', 'Skeleton III',
   'Barbarian I', 'Barbarian II', 'Barbarian III',
@@ -42,7 +40,7 @@ const settings = ref({
 
 const fetchSettings = async () => {
   try {
-    const response = await axios.get(`${API}/admin/clan-settings`, {
+    const response = await api.get('/admin/clan-settings', {
       headers: headers()
     })
     settings.value = { ...settings.value, ...(response.data.settings || {}) }
@@ -65,8 +63,8 @@ const saveSettings = async () => {
   success.value = ''
 
   try {
-    const response = await axios.patch(
-      `${API}/admin/clan-settings`,
+    const response = await api.patch(
+      '/admin/clan-settings',
       settings.value,
       { headers: headers() }
     )

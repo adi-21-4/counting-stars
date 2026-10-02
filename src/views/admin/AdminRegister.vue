@@ -148,7 +148,7 @@
 
 <script setup>
 import { reactive, ref } from 'vue'
-import axios from 'axios'
+import api from '../../services/api'
 
 const form = reactive({
   username: '',
@@ -165,7 +165,7 @@ async function submitRequest() {
   error.value = ''
 
   try {
-    const response = await axios.post('/api/auth/register', {
+    const response = await api.post('/auth/register', {
       username: form.username.trim(),
       password: form.password,
       reason: form.reason.trim()

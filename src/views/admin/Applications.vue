@@ -8,7 +8,7 @@ import {
   User,
   MessageCircle
 } from 'lucide-vue-next'
-import axios from 'axios'
+import api from '../../services/api'
 
 const applications = ref([])
 const loading = ref(true)
@@ -24,8 +24,8 @@ const fetchApplications = async () => {
   error.value = ''
 
   try {
-    const response = await axios.get(
-      'http://127.0.0.1:5000/api/admin/applications',
+    const response = await api.get(
+      '/admin/applications',
       {
         headers: {
           Authorization: `Bearer ${getToken()}`
@@ -59,8 +59,8 @@ const updateStatus = async (application, status) => {
   updating.value = application.id
 
   try {
-    const response = await axios.patch(
-      `http://127.0.0.1:5000/api/admin/applications/${application.id}`,
+    const response = await api.patch(
+      `/admin/applications/${application.id}`,
       {
         status
       },

@@ -2,7 +2,7 @@
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { ShieldCheck, LockKeyhole, User } from 'lucide-vue-next'
-import axios from 'axios'
+import api from '../../services/api'
 
 const router = useRouter()
 
@@ -22,8 +22,8 @@ const login = async () => {
   loading.value = true
 
   try {
-    const response = await axios.post(
-      'http://127.0.0.1:5000/api/auth/login',
+    const response = await api.post(
+      '/auth/login',
       {
         username: username.value,
         password: password.value

@@ -34,7 +34,7 @@ import {
 
 } from 'lucide-vue-next'
 
-import axios from 'axios'
+import api from '../../services/api'
 
 const router = useRouter()
 
@@ -194,9 +194,9 @@ try {
 
      */
 
-    const meResponse = await axios.get(
+    const meResponse = await api.get(
 
-      'http://127.0.0.1:5000/api/auth/me',
+      '/auth/me',
 
       {
 
@@ -214,9 +214,9 @@ user.value = meResponse.data.user
 
      */
 
-    const applicationsResponse = await axios.get(
+    const applicationsResponse = await api.get(
 
-      'http://127.0.0.1:5000/api/admin/applications',
+      '/admin/applications',
 
       {
 
@@ -236,9 +236,9 @@ applications.value =
 
      */
 
-    const membersResponse = await axios.get(
+    const membersResponse = await api.get(
 
-      'http://127.0.0.1:5000/api/members'
+      '/members'
 
     )
 
@@ -252,9 +252,9 @@ memberCount.value =
 
      */
 
-    const warResponse = await axios.get(
+    const warResponse = await api.get(
 
-      'http://127.0.0.1:5000/api/current-war'
+      '/current-war'
 
     )
 
@@ -263,8 +263,8 @@ war.value = warResponse.data.data
 /*
    * Get announcements
    */
-  const announcementsResponse = await axios.get(
-    'http://127.0.0.1:5000/api/admin/announcements',
+  const announcementsResponse = await api.get(
+    '/admin/announcements',
     {
       headers: authHeaders()
     }

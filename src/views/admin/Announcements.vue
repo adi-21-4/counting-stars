@@ -1,6 +1,6 @@
 <script setup>
 import { computed, onMounted, ref } from 'vue'
-import axios from 'axios'
+import api from '../../services/api'
 import {
   Plus,
   Pencil,
@@ -13,8 +13,6 @@ import {
   AlertCircle,
   CheckCircle
 } from 'lucide-vue-next'
-
-const API_URL = 'http://127.0.0.1:5000/api'
 
 const announcements = ref([])
 const loading = ref(true)
@@ -135,8 +133,8 @@ const fetchAnnouncements = async () => {
   try {
     const token = localStorage.getItem('admin_token')
 
-    const response = await axios.get(
-      `${API_URL}/admin/announcements`,
+    const response = await api.get(
+      '/admin/announcements',
       {
         headers: {
           Authorization: `Bearer ${token}`
@@ -188,8 +186,8 @@ const saveAnnouncement = async () => {
     let response
 
     if (editingId.value) {
-      response = await axios.patch(
-        `${API_URL}/admin/announcements/${editingId.value}`,
+      response = await api.patch(
+        `/admin/announcements/${editingId.value}`,
         payload,
         {
           headers: {
@@ -198,8 +196,8 @@ const saveAnnouncement = async () => {
         }
       )
     } else {
-      response = await axios.post(
-        `${API_URL}/admin/announcements`,
+      response = await api.post(
+        '/admin/announcements',
         payload,
         {
           headers: {
@@ -239,8 +237,8 @@ const togglePublished = async (announcement) => {
   try {
     const token = localStorage.getItem('admin_token')
 
-    await axios.patch(
-      `${API_URL}/admin/announcements/${announcement.id}`,
+    await api.patch(
+      `/admin/announcements/${announcement.id}`,
       {
         isPublished: !announcement.isPublished
       },
@@ -283,8 +281,8 @@ const deleteAnnouncement = async (announcement) => {
   try {
     const token = localStorage.getItem('admin_token')
 
-    await axios.delete(
-      `${API_URL}/admin/announcements/${announcement.id}`,
+    await api.delete(
+      `/admin/announcements/${announcement.id}`,
       {
         headers: {
           Authorization: `Bearer ${token}`

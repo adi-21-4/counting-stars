@@ -2,7 +2,7 @@
 
 import { onMounted, ref } from 'vue'
 
-import { getClanSettings } from '../services/api'
+import api, { getClanSettings } from '../services/api'
 
 import {
 
@@ -22,7 +22,6 @@ import {
 
 } from 'lucide-vue-next'
 
-import axios from 'axios'
 
 
 
@@ -171,9 +170,9 @@ const submitApplication = async () => {
 
   try {
 
-    const response = await axios.post(
+    const response = await api.post(
 
-      'http\://127.0.0.1:5000/api/applications',
+      '/applications',
 
       form.value
 

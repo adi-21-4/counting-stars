@@ -185,7 +185,7 @@
 
 <script setup>
 import { onMounted, ref } from 'vue'
-import axios from 'axios'
+import api from '../../services/api'
 
 const requests = ref([])
 const loading = ref(true)
@@ -199,7 +199,7 @@ async function loadRequests() {
   try {
     const token = localStorage.getItem('admin_token')
 
-    const response = await axios.get('/api/admin/requests', {
+    const response = await api.get('/admin/requests', {
       headers: {
         Authorization: `Bearer ${token}`
       }
@@ -232,7 +232,7 @@ async function reviewRequest(id, status) {
   try {
     const token = localStorage.getItem('admin_token')
 
-    await axios.patch(
+    await api.patch(
       `/api/admin/requests/${id}`,
       { status },
       {

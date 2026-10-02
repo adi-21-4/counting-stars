@@ -269,6 +269,36 @@ onMounted(() => {
       <template v-else-if="war">
 
         <!-- ========================================================== -->
+        <!-- NOT IN WAR -->
+        <!-- ========================================================== -->
+
+        <div
+          v-if="war.state === 'notInWar'"
+          class="rounded-2xl border border-slate-800 bg-slate-900 p-10 text-center"
+        >
+          <div
+            class="mx-auto flex h-16 w-16 items-center justify-center rounded-full border border-slate-700 bg-slate-950 text-3xl"
+          >
+            ⚔️
+          </div>
+
+          <h2 class="mt-6 text-2xl font-black">
+            No Active War
+          </h2>
+
+          <p class="mx-auto mt-3 max-w-xl text-slate-500">
+            Counting Stars is currently not participating in a war.
+            Check back when the next war begins.
+          </p>
+        </div>
+
+        <!-- ========================================================== -->
+        <!-- WAR DATA -->
+        <!-- ========================================================== -->
+
+        <div v-else>
+
+        <!-- ========================================================== -->
         <!-- WAR STATUS -->
         <!-- ========================================================== -->
 
@@ -624,6 +654,8 @@ onMounted(() => {
             </div>
 
           </div>
+
+        </div>
 
         </div>
 
