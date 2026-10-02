@@ -6,18 +6,18 @@ import api from '../../services/api'
 
 const router = useRouter()
 const leagues = [
-  'Skeleton I', 'Skeleton II', 'Skeleton III',
-  'Barbarian I', 'Barbarian II', 'Barbarian III',
-  'Archer I', 'Archer II', 'Archer III',
-  'Wizard I', 'Wizard II', 'Wizard III',
-  'Valkyrie I', 'Valkyrie II', 'Valkyrie III',
-  'Witch I', 'Witch II', 'Witch III',
-  'Golem I', 'Golem II', 'Golem III',
-  'P.E.K.K.A I', 'P.E.K.K.A II', 'P.E.K.K.A III',
-  'Titan I', 'Titan II', 'Titan III',
-  'Dragon I', 'Dragon II', 'Dragon III',
-  'Electro I', 'Electro II', 'Electro III',
-  'Legend III', 'Legend II', 'Legend I'
+  'Skeleton 1', 'Skeleton 2', 'Skeleton 3',
+  'Barbarian 4', 'Barbarian 5', 'Barbarian 6',
+  'Archer 7', 'Archer 8', 'Archer 9',
+  'Wizard 10', 'Wizard 11', 'Wizard 12',
+  'Valkyrie 13', 'Valkyrie 14', 'Valkyrie 15',
+  'Witch 16', 'Witch 17', 'Witch 18',
+  'Golem 19', 'Golem 20', 'Golem 21',
+  'P.E.K.K.A 22', 'P.E.K.K.A 23', 'P.E.K.K.A 24',
+  'Titan 25', 'Titan 26', 'Titan 27',
+  'Dragon 28', 'Dragon 29', 'Dragon 30',
+  'Electro 31', 'Electro 32', 'Electro 33',
+  'Legend 3', 'Legend 2', 'Legend 1'
 ]
 
 const token = () => localStorage.getItem('admin_token')
@@ -30,7 +30,7 @@ const success = ref('')
 
 const settings = ref({
   minTownHall: 15,
-  minLeague: 'Skeleton I',
+  minLeague: 'Skeleton 1',
   minimumDonations: 1000,
   warParticipationRequired: true,
   recruitmentOpen: true,
@@ -44,6 +44,25 @@ const fetchSettings = async () => {
       headers: headers()
     })
     settings.value = { ...settings.value, ...(response.data.settings || {}) }
+
+    const legacyLeagueMap = {
+      'Skeleton I': 'Skeleton 1', 'Skeleton II': 'Skeleton 2', 'Skeleton III': 'Skeleton 3',
+      'Barbarian I': 'Barbarian 4', 'Barbarian II': 'Barbarian 5', 'Barbarian III': 'Barbarian 6',
+      'Archer I': 'Archer 7', 'Archer II': 'Archer 8', 'Archer III': 'Archer 9',
+      'Wizard I': 'Wizard 10', 'Wizard II': 'Wizard 11', 'Wizard III': 'Wizard 12',
+      'Valkyrie I': 'Valkyrie 13', 'Valkyrie II': 'Valkyrie 14', 'Valkyrie III': 'Valkyrie 15',
+      'Witch I': 'Witch 16', 'Witch II': 'Witch 17', 'Witch III': 'Witch 18',
+      'Golem I': 'Golem 19', 'Golem II': 'Golem 20', 'Golem III': 'Golem 21',
+      'P.E.K.K.A I': 'P.E.K.K.A 22', 'P.E.K.K.A II': 'P.E.K.K.A 23', 'P.E.K.K.A III': 'P.E.K.K.A 24',
+      'Titan I': 'Titan 25', 'Titan II': 'Titan 26', 'Titan III': 'Titan 27',
+      'Dragon I': 'Dragon 28', 'Dragon II': 'Dragon 29', 'Dragon III': 'Dragon 30',
+      'Electro I': 'Electro 31', 'Electro II': 'Electro 32', 'Electro III': 'Electro 33',
+      'Legend III': 'Legend 3', 'Legend II': 'Legend 2', 'Legend I': 'Legend 1'
+    }
+
+    if (legacyLeagueMap[settings.value.minLeague]) {
+      settings.value.minLeague = legacyLeagueMap[settings.value.minLeague]
+    }
   } catch (err) {
     if (err.response?.status === 401 || err.response?.status === 422) {
       localStorage.removeItem('admin_token')
@@ -70,6 +89,25 @@ const saveSettings = async () => {
     )
 
     settings.value = { ...settings.value, ...(response.data.settings || {}) }
+
+    const legacyLeagueMap = {
+      'Skeleton I': 'Skeleton 1', 'Skeleton II': 'Skeleton 2', 'Skeleton III': 'Skeleton 3',
+      'Barbarian I': 'Barbarian 4', 'Barbarian II': 'Barbarian 5', 'Barbarian III': 'Barbarian 6',
+      'Archer I': 'Archer 7', 'Archer II': 'Archer 8', 'Archer III': 'Archer 9',
+      'Wizard I': 'Wizard 10', 'Wizard II': 'Wizard 11', 'Wizard III': 'Wizard 12',
+      'Valkyrie I': 'Valkyrie 13', 'Valkyrie II': 'Valkyrie 14', 'Valkyrie III': 'Valkyrie 15',
+      'Witch I': 'Witch 16', 'Witch II': 'Witch 17', 'Witch III': 'Witch 18',
+      'Golem I': 'Golem 19', 'Golem II': 'Golem 20', 'Golem III': 'Golem 21',
+      'P.E.K.K.A I': 'P.E.K.K.A 22', 'P.E.K.K.A II': 'P.E.K.K.A 23', 'P.E.K.K.A III': 'P.E.K.K.A 24',
+      'Titan I': 'Titan 25', 'Titan II': 'Titan 26', 'Titan III': 'Titan 27',
+      'Dragon I': 'Dragon 28', 'Dragon II': 'Dragon 29', 'Dragon III': 'Dragon 30',
+      'Electro I': 'Electro 31', 'Electro II': 'Electro 32', 'Electro III': 'Electro 33',
+      'Legend III': 'Legend 3', 'Legend II': 'Legend 2', 'Legend I': 'Legend 1'
+    }
+
+    if (legacyLeagueMap[settings.value.minLeague]) {
+      settings.value.minLeague = legacyLeagueMap[settings.value.minLeague]
+    }
     success.value = 'Clan settings saved successfully.'
   } catch (err) {
     error.value = err.response?.data?.error || 'Unable to save clan settings.'
