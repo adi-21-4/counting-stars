@@ -4,6 +4,11 @@ import { RouterLink, RouterView } from 'vue-router'
 import { getClan } from './services/api'
 
 const clan = ref(null)
+const mobileMenuOpen = ref(false)
+
+const closeMobileMenu = () => {
+  mobileMenuOpen.value = false
+}
 
 onMounted(async () => {
   const response = await getClan()
@@ -116,6 +121,34 @@ onMounted(async () => {
 
         </div>
 
+        <!-- MOBILE MENU BUTTON -->
+        <button
+          type="button"
+          class="flex h-11 w-11 items-center justify-center rounded-xl
+                 border border-white/10 bg-white/5 text-gray-200 md:hidden"
+          aria-label="Toggle navigation menu"
+          :aria-expanded="mobileMenuOpen"
+          @click="mobileMenuOpen = !mobileMenuOpen"
+        >
+          <span v-if="!mobileMenuOpen" class="text-2xl leading-none">☰</span>
+          <span v-else class="text-2xl leading-none">×</span>
+        </button>
+
+      </div>
+
+      <!-- MOBILE NAV -->
+      <div
+        v-if="mobileMenuOpen"
+        class="border-t border-white/10 bg-[#080b12]/95 px-4 py-4 md:hidden"
+      >
+        <div class="mx-auto max-w-7xl space-y-2">
+          <RouterLink @click="closeMobileMenu" to="/" class="mobile-nav-link">Home</RouterLink>
+          <RouterLink @click="closeMobileMenu" to="/members" class="mobile-nav-link">Members</RouterLink>
+          <RouterLink @click="closeMobileMenu" to="/wars" class="mobile-nav-link">Wars</RouterLink>
+          <RouterLink @click="closeMobileMenu" to="/stats" class="mobile-nav-link">Stats</RouterLink>
+          <RouterLink @click="closeMobileMenu" to="/join" class="mobile-nav-link mobile-nav-join">Join Us</RouterLink>
+          <RouterLink @click="closeMobileMenu" to="/admin" class="mobile-nav-link mobile-nav-admin">Admin Dashboard</RouterLink>
+        </div>
       </div>
     </nav>
 
@@ -174,6 +207,39 @@ onMounted(async () => {
 
 .router-link-active.nav-link {
   color: white;
+}
+
+.mobile-nav-link {
+  display: block;
+  border-radius: 0.75rem;
+  padding: 0.8rem 1rem;
+  color: rgb(203 213 225);
+  font-size: 0.95rem;
+  font-weight: 600;
+  transition: background-color 0.2s, color 0.2s;
+}
+
+.mobile-nav-link:hover,
+.mobile-nav-link.router-link-active {
+  background: rgb(255 255 255 / 0.06);
+  color: white;
+}
+
+.mobile-nav-join {
+  background: rgb(250 204 21);
+  color: black;
+  text-align: center;
+}
+
+.mobile-nav-join:hover,
+.mobile-nav-join.router-link-active {
+  background: rgb(253 224 71);
+  color: black;
+}
+
+.mobile-nav-admin {
+  border: 1px solid rgb(255 255 255 / 0.1);
+  background: rgb(255 255 255 / 0.03);
 }
 
 </style>
