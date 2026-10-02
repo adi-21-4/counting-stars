@@ -87,30 +87,63 @@ const fetchClanSettings = async () => {
 
 
 
-const rankedLeagues = [
-  'Skeleton III', 'Skeleton II', 'Skeleton I',
-  'Barbarian III', 'Barbarian II', 'Barbarian I',
-  'Archer III', 'Archer II', 'Archer I',
-  'Wizard III', 'Wizard II', 'Wizard I',
-  'Valkyrie III', 'Valkyrie II', 'Valkyrie I',
-  'Witch III', 'Witch II', 'Witch I',
-  'Golem III', 'Golem II', 'Golem I',
-  'P.E.K.K.A III', 'P.E.K.K.A II', 'P.E.K.K.A I',
-  'Titan III', 'Titan II', 'Titan I',
-  'Dragon III', 'Dragon II', 'Dragon I',
-  'Electro III', 'Electro II', 'Electro I',
-  'Legend III', 'Legend II', 'Legend I'
-]
+// Higher number = higher-ranked league.
+// Keep the ranking explicit so a valid league such as Legend I
+// is always recognized as above P.E.K.K.A I.
+const leagueRank = {
+  'Skeleton III': 1,
+  'Skeleton II': 2,
+  'Skeleton I': 3,
+  'Barbarian III': 4,
+  'Barbarian II': 5,
+  'Barbarian I': 6,
+  'Archer III': 7,
+  'Archer II': 8,
+  'Archer I': 9,
+  'Wizard III': 10,
+  'Wizard II': 11,
+  'Wizard I': 12,
+  'Valkyrie III': 13,
+  'Valkyrie II': 14,
+  'Valkyrie I': 15,
+  'Witch III': 16,
+  'Witch II': 17,
+  'Witch I': 18,
+  'Golem III': 19,
+  'Golem II': 20,
+  'Golem I': 21,
+  'P.E.K.K.A III': 22,
+  'P.E.K.K.A II': 23,
+  'P.E.K.K.A I': 24,
+  'Titan III': 25,
+  'Titan II': 26,
+  'Titan I': 27,
+  'Dragon III': 28,
+  'Dragon II': 29,
+  'Dragon I': 30,
+  'Electro III': 31,
+  'Electro II': 32,
+  'Electro I': 33,
+  'Legend III': 34,
+  'Legend II': 35,
+  'Legend I': 36
+}
 
 const isLeagueEligible = (playerLeague, minimumLeague) => {
-  const playerIndex = rankedLeagues.indexOf(playerLeague)
-  const minimumIndex = rankedLeagues.indexOf(minimumLeague)
+  const normalizeLeague = (league) =>
+    String(league || '').trim().replace(/\\s+/g, ' ')
 
-  if (playerIndex === -1 || minimumIndex === -1) {
+  const player = normalizeLeague(playerLeague)
+  const minimum = normalizeLeague(minimumLeague)
+
+  const playerRank = leagueRank[player]
+  const minimumRank = leagueRank[minimum]
+
+  if (!playerRank || !minimumRank) {
     return false
   }
 
-  return playerIndex >= minimumIndex
+  return playerRank >= minimumRank
 }
 
 const submitApplication = async () => {
