@@ -217,9 +217,17 @@ async function loadRequests() {
 }
 
 async function reviewRequest(id, status) {
+  const requestedRole =
+    requests.value.find((request) => request.id === id)?.requestedRole || 'co_leader'
+
+  const roleLabel =
+    requestedRole === 'leader'
+      ? 'Leader'
+      : 'Co-Leader'
+
   const action =
     status === 'approved'
-      ? 'approve this admin request'
+      ? `approve this user as ${roleLabel}`
       : 'reject this admin request'
 
   if (!window.confirm(`Are you sure you want to ${action}?`)) {
@@ -233,7 +241,7 @@ async function reviewRequest(id, status) {
     const token = localStorage.getItem('admin_token')
 
     await api.patch(
-      `/api/admin/requests/${id}`,
+      `/admin/requests/${id}`,
       { status },
       {
         headers: {

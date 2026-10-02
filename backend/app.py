@@ -333,7 +333,14 @@ def register_admin_request():
     ).strip()
 
     # Public registration can only request Co-Leader.
-    requested_role = "co_leader"
+    # Applicants may request either Leader or Co-Leader.
+    requested_role = data.get("requestedRole", "co_leader")
+
+    if requested_role not in ["leader", "co_leader"]:
+         return jsonify({
+            "success": False,
+            "error": "Role must be leader or co_leader"
+        }), 400
 
     if not username or not password or not reason:
 

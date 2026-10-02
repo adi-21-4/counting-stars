@@ -78,6 +78,47 @@
             />
           </div>
 
+          <!-- Requested Role -->
+          <div>
+            <label class="mb-2 block text-sm font-medium text-slate-300">
+              Requested Admin Role
+            </label>
+
+            <div class="grid gap-3 sm:grid-cols-2">
+              <label
+                class="flex cursor-pointer items-center gap-3 rounded-lg border
+                       border-slate-700 bg-slate-950 px-4 py-3
+                       transition hover:border-yellow-400/60"
+              >
+                <input
+                  v-model="form.requestedRole"
+                  type="radio"
+                  value="co_leader"
+                  class="accent-yellow-400"
+                />
+                <span class="text-slate-200">Co-Leader</span>
+              </label>
+
+              <label
+                class="flex cursor-pointer items-center gap-3 rounded-lg border
+                       border-slate-700 bg-slate-950 px-4 py-3
+                       transition hover:border-yellow-400/60"
+              >
+                <input
+                  v-model="form.requestedRole"
+                  type="radio"
+                  value="leader"
+                  class="accent-yellow-400"
+                />
+                <span class="text-slate-200">Leader</span>
+              </label>
+            </div>
+
+            <p class="mt-2 text-xs text-slate-500">
+              Leadership will review the role you request before approving access.
+            </p>
+          </div>
+
           <!-- Reason -->
           <div>
             <label class="mb-2 block text-sm font-medium text-slate-300">
@@ -153,6 +194,7 @@ import api from '../../services/api'
 const form = reactive({
   username: '',
   password: '',
+  requestedRole: 'co_leader',
   reason: ''
 })
 
@@ -168,6 +210,7 @@ async function submitRequest() {
     const response = await api.post('/auth/register', {
       username: form.username.trim(),
       password: form.password,
+      requestedRole: form.requestedRole,
       reason: form.reason.trim()
     })
 
@@ -177,6 +220,7 @@ async function submitRequest() {
 
     form.username = ''
     form.password = ''
+    form.requestedRole = 'co_leader'
     form.reason = ''
 
   } catch (err) {
