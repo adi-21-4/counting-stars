@@ -199,6 +199,20 @@ const login = async () => {
 
         </form>
 
+        <!-- Admin registration -->
+        <div class="mt-6 border-t border-slate-800 pt-5 text-center">
+          <p class="text-sm text-slate-500">
+            Need admin access?
+          </p>
+
+          <RouterLink
+            to="/admin/register"
+            class="mt-2 inline-block font-semibold text-yellow-400 transition hover:text-yellow-300"
+          >
+            Request Admin Access →
+          </RouterLink>
+        </div>
+
       </div>
 
       <!-- Back -->
