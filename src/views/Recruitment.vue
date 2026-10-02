@@ -87,57 +87,31 @@ const fetchClanSettings = async () => {
 
 
 
-// Higher number = higher-ranked league.
-// Keep the ranking explicit so a valid league such as Legend I
-// is always recognized as above P.E.K.K.A I.
-const leagueRank = {
-  'Skeleton III': 1,
-  'Skeleton II': 2,
-  'Skeleton I': 3,
-  'Barbarian III': 4,
-  'Barbarian II': 5,
-  'Barbarian I': 6,
-  'Archer III': 7,
-  'Archer II': 8,
-  'Archer I': 9,
-  'Wizard III': 10,
-  'Wizard II': 11,
-  'Wizard I': 12,
-  'Valkyrie III': 13,
-  'Valkyrie II': 14,
-  'Valkyrie I': 15,
-  'Witch III': 16,
-  'Witch II': 17,
-  'Witch I': 18,
-  'Golem III': 19,
-  'Golem II': 20,
-  'Golem I': 21,
-  'P.E.K.K.A III': 22,
-  'P.E.K.K.A II': 23,
-  'P.E.K.K.A I': 24,
-  'Titan III': 25,
-  'Titan II': 26,
-  'Titan I': 27,
-  'Dragon III': 28,
-  'Dragon II': 29,
-  'Dragon I': 30,
-  'Electro III': 31,
-  'Electro II': 32,
-  'Electro I': 33,
-  'Legend III': 34,
-  'Legend II': 35,
-  'Legend I': 36
-}
+const rankedLeagues = [
+  "Skeleton 1", "Skeleton 2", "Skeleton 3",
+  "Barbarian 4", "Barbarian 5", "Barbarian 6",
+  "Archer 7", "Archer 8", "Archer 9",
+  "Wizard 10", "Wizard 11", "Wizard 12",
+  "Valkyrie 13", "Valkyrie 14", "Valkyrie 15",
+  "Witch 16", "Witch 17", "Witch 18",
+  "Golem 19", "Golem 20", "Golem 21",
+  "P.E.K.K.A 22", "P.E.K.K.A 23", "P.E.K.K.A 24",
+  "Titan 25", "Titan 26", "Titan 27",
+  "Dragon 28", "Dragon 29", "Dragon 30",
+  "Electro 31", "Electro 32", "Electro 33",
+  "Legend 3", "Legend 2", "Legend 1"
+]
+
+const leagueRank = Object.fromEntries(
+  rankedLeagues.map((league, index) => [league, index + 1])
+)
+
+const normalizeLeague = (league) =>
+  String(league || "").trim().replace(/\s+/g, " ")
 
 const isLeagueEligible = (playerLeague, minimumLeague) => {
-  const normalizeLeague = (league) =>
-    String(league || '').trim().replace(/\\s+/g, ' ')
-
-  const player = normalizeLeague(playerLeague)
-  const minimum = normalizeLeague(minimumLeague)
-
-  const playerRank = leagueRank[player]
-  const minimumRank = leagueRank[minimum]
+  const playerRank = leagueRank[normalizeLeague(playerLeague)]
+  const minimumRank = leagueRank[normalizeLeague(minimumLeague)]
 
   if (!playerRank || !minimumRank) {
     return false
@@ -953,54 +927,42 @@ onMounted(fetchClanSettings)
                        outline-none focus:border-yellow-400"
               >
                 <option value="">Select League</option>
-
-                <option value="Skeleton III">Skeleton III</option>
-                <option value="Skeleton II">Skeleton II</option>
-                <option value="Skeleton I">Skeleton I</option>
-
-                <option value="Barbarian III">Barbarian III</option>
-                <option value="Barbarian II">Barbarian II</option>
-                <option value="Barbarian I">Barbarian I</option>
-
-                <option value="Archer III">Archer III</option>
-                <option value="Archer II">Archer II</option>
-                <option value="Archer I">Archer I</option>
-
-                <option value="Wizard III">Wizard III</option>
-                <option value="Wizard II">Wizard II</option>
-                <option value="Wizard I">Wizard I</option>
-
-                <option value="Valkyrie III">Valkyrie III</option>
-                <option value="Valkyrie II">Valkyrie II</option>
-                <option value="Valkyrie I">Valkyrie I</option>
-
-                <option value="Witch III">Witch III</option>
-                <option value="Witch II">Witch II</option>
-                <option value="Witch I">Witch I</option>
-
-                <option value="Golem III">Golem III</option>
-                <option value="Golem II">Golem II</option>
-                <option value="Golem I">Golem I</option>
-
-                <option value="P.E.K.K.A III">P.E.K.K.A III</option>
-                <option value="P.E.K.K.A II">P.E.K.K.A II</option>
-                <option value="P.E.K.K.A I">P.E.K.K.A I</option>
-
-                <option value="Titan III">Titan III</option>
-                <option value="Titan II">Titan II</option>
-                <option value="Titan I">Titan I</option>
-
-                <option value="Dragon III">Dragon III</option>
-                <option value="Dragon II">Dragon II</option>
-                <option value="Dragon I">Dragon I</option>
-
-                <option value="Electro III">Electro III</option>
-                <option value="Electro II">Electro II</option>
-                <option value="Electro I">Electro I</option>
-
-                <option value="Legend III">Legend III</option>
-                <option value="Legend II">Legend II</option>
-                <option value="Legend I">Legend I</option>
+                <option value="Skeleton 1">Skeleton 1</option>
+                <option value="Skeleton 2">Skeleton 2</option>
+                <option value="Skeleton 3">Skeleton 3</option>
+                <option value="Barbarian 4">Barbarian 4</option>
+                <option value="Barbarian 5">Barbarian 5</option>
+                <option value="Barbarian 6">Barbarian 6</option>
+                <option value="Archer 7">Archer 7</option>
+                <option value="Archer 8">Archer 8</option>
+                <option value="Archer 9">Archer 9</option>
+                <option value="Wizard 10">Wizard 10</option>
+                <option value="Wizard 11">Wizard 11</option>
+                <option value="Wizard 12">Wizard 12</option>
+                <option value="Valkyrie 13">Valkyrie 13</option>
+                <option value="Valkyrie 14">Valkyrie 14</option>
+                <option value="Valkyrie 15">Valkyrie 15</option>
+                <option value="Witch 16">Witch 16</option>
+                <option value="Witch 17">Witch 17</option>
+                <option value="Witch 18">Witch 18</option>
+                <option value="Golem 19">Golem 19</option>
+                <option value="Golem 20">Golem 20</option>
+                <option value="Golem 21">Golem 21</option>
+                <option value="P.E.K.K.A 22">P.E.K.K.A 22</option>
+                <option value="P.E.K.K.A 23">P.E.K.K.A 23</option>
+                <option value="P.E.K.K.A 24">P.E.K.K.A 24</option>
+                <option value="Titan 25">Titan 25</option>
+                <option value="Titan 26">Titan 26</option>
+                <option value="Titan 27">Titan 27</option>
+                <option value="Dragon 28">Dragon 28</option>
+                <option value="Dragon 29">Dragon 29</option>
+                <option value="Dragon 30">Dragon 30</option>
+                <option value="Electro 31">Electro 31</option>
+                <option value="Electro 32">Electro 32</option>
+                <option value="Electro 33">Electro 33</option>
+                <option value="Legend 3">Legend 3</option>
+                <option value="Legend 2">Legend 2</option>
+                <option value="Legend 1">Legend 1</option>
               </select>
             </div>
 
