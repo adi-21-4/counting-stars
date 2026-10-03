@@ -13,7 +13,9 @@ BASE_URL = "https://api.clashofclans.com/v1"
 def get_headers():
     return {
         "Authorization": f"Bearer {CLASH_API_TOKEN}",
-        "Accept": "application/json"
+        "Accept": "application/json",
+        "Connection": "close",
+        "Proxy-Connection": "close"
     }
 
 
@@ -67,7 +69,7 @@ def get_current_war(clan_tag):
             url,
             headers=get_headers(),
             proxies=get_proxies(),
-            timeout=10
+            timeout=30
         )
         return response.status_code, response.json()
 
@@ -95,7 +97,7 @@ def get_war_log(clan_tag):
             url,
             headers=get_headers(),
             proxies=get_proxies(),
-            timeout=10
+            timeout=30
         )
         return response.status_code, response.json()
 
