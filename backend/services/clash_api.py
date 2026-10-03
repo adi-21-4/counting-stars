@@ -39,7 +39,7 @@ def get_clan(clan_tag):
             url,
             headers=get_headers(),
             proxies=get_proxies(),
-            timeout=10
+            timeout=30
         )
         return response.status_code, response.json()
 
