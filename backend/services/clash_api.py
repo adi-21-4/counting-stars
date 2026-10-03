@@ -1,10 +1,6 @@
 import os
 import requests
 from dotenv import load_dotenv
-import urllib3
-
-print("REQUESTS VERSION:", requests.__version__)
-print("URLLIB3 VERSION:", urllib3.__version__)
 
 load_dotenv()
 
