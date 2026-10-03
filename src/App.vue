@@ -1,22 +1,16 @@
 <script setup>
-import { onMounted, ref } from 'vue'
+import { ref } from 'vue'
 import { RouterLink, RouterView } from 'vue-router'
-import { getClan } from './services/api'
 
-const clan = ref(null)
+
+
 const mobileMenuOpen = ref(false)
 
 const closeMobileMenu = () => {
   mobileMenuOpen.value = false
 }
 
-onMounted(async () => {
-  const response = await getClan()
 
-  if (response.code === 0) {
-    clan.value = response.data?.data
-  }
-})
 </script>
 
 <template>
